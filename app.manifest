@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
+  <assemblyIdentity version="1.0.0.0" name="SCPSLAlert.app" />
+
+  <!--
+    为什么要提权：
+      Windows 的 UIPI 规定，**低权限进程看不到高权限窗口的输入，也截不到它的画面**。
+      如果游戏（或 Steam）是以管理员身份运行的，而本程序不是，那么：
+        · 全局热键收不到（现象：焦点不在本程序时按键全部无效）
+        · 屏幕截图全黑（现象：OCR 在游戏里什么都认不出来）
+      两边权限一致就没这个问题，所以这里申请"能拿到的最高权限"。
+
+    highestAvailable 而不是 requireAdministrator：
+      · 你是管理员   → 会提权（UAC 弹窗点"是"即可），问题消失；
+      · 你不是管理员 → 也能正常运行，不会因为要不到管理员而打不开。
+  -->
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
+    <security>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <requestedExecutionLevel level="highestAvailable" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- Windows 10 / 11 -->
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
+      <!-- Windows 8.1 -->
+      <supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />
+      <!-- Windows 8 -->
+      <supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />
+      <!-- Windows 7 -->
+      <supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />
+    </application>
+  </compatibility>
+
+  <!--
+    WPF 高 DPI：PerMonitorV2。
+    · dpiAware = true/pm 兼容 Win8.1/Win10 早期版本；
+    · dpiAwareness = PerMonitorV2 优先，Windows 10 1703+ 使用；
+    · 进程内所有窗口（含旧 WinForms 界面）都会收到每显示器 DPI 变化。
+      旧界面按 AutoScaleMode.Dpi 适配，验收时仍需手动看 125/150/200%。
+  -->
+  <asmv3:application>
+    <asmv3:windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true/pm</dpiAware>
+      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2, PerMonitor</dpiAwareness>
+    </asmv3:windowsSettings>
+  </asmv3:application>
+</assembly>

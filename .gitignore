@@ -1,0 +1,47 @@
+# 编译产物
+/SCPSLAlert.exe
+/*.exe
+/*.pdb
+/*.dll
+/Tesseract.dll
+/x64/
+/x86/
+
+# 首次运行生成的个人配置与运行数据
+/config.ini
+/config.ini.bak*
+/备份/
+/崩溃/
+/对局记录/
+/导出/
+/性能报告/
+/游戏崩溃/
+/诊断/
+/阵营截图/
+/Themes/
+/Fonts/*
+!/Fonts/.gitkeep
+/音频/
+
+# 运行日志
+*.log
+
+# 测试、临时目录与工作区内部资料
+/_tests/
+/test/
+/.inspect/
+/dsh-*/
+/预览图/
+/设计/
+
+# IDE
+.vs/
+.idea/
+bin/
+obj/
+*.user
+
+# Windows
+Thumbs.db
+desktop.ini
+.DS_Store
